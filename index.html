@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      scroll-behavior: smooth;
+    }
+    .nav {
+      background: #4a148c;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .search-bar {
+      background: white;
+      padding: 10px;
+      border-radius: 4px;
+      width: 50%;
+      margin: 0 20px;
+    }
+    .category-nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      background: white;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 60px;
+      z-index: 1000;
+    }
+    .category-item {
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px 10px;
+      transition: color 0.3s;
+    }
+    .category-item:hover {
+      color: #4a148c;
+    }
+    .hero-banner {
+      background: linear-gradient(45deg, #4a148c, #7b1fa2);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card-image {
+      height: 200px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .price {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .category-label {
+      font-size: 24px;
+      margin: 20px;
+      font-weight: bold;
+      scroll-margin-top: 120px;
+    }
+    .section {
+      scroll-margin-top: 120px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 2000;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: white;
+      margin: 100px auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    .card {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .modal-image {
+      width: 200px;
+      height: 200px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      padding: 20px;
+    }
+
+    .modal-details h2 {
+      margin-top: 0;
+      color: #4a148c;
+    }
+
+    .tech-tag {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 5px 10px;
+      border-radius: 15px;
+      margin: 5px;
+      font-size: 14px;
+    }
+
+    /* Add this to your existing styles */
+    </style>
+    <script>
+    function showModal(modalId) {
+      document.getElementById(modalId).style.display = "block";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+    }
+    </script>
+</head>
+<body>
+  <div class="nav">
+    <div style="font-size: 24px; font-weight: bold;">
+      <img src="https://u-web-assets.mercdn.net/assets/icons/logo-white.svg">
+    </div>
+    <input type="text" class="search-bar" placeholder="Search for skills and experience">
+    <div>
+      <button style="background: white; color: #4a148c; padding: 8px 16px; border-radius: 4px; border: none;" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Contact</button>
+    </div>
+  </div>
+  
+  <div class="category-nav">
+    <div class="category-item" onclick="document.getElementById('experience').scrollIntoView({behavior: 'smooth'})">Experience</div>
+    <div class="category-item" onclick="document.getElementById('education').scrollIntoView({behavior: 'smooth'})">Education</div>
+    <div class="category-item" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">Projects</div>
+    <div class="category-item" onclick="document.getElementById('skills').scrollIntoView({behavior: 'smooth'})">Skills</div>
+    <div class="category-item" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Contact</div>
+  </div>
+
+  <div class="hero-banner">
+    <h1>Rounith Dharavath</h1>
+    <p>SAP Fiori Developer | Full Stack Developer | Cyber Security Enthusiast</p>
+    <p>⭐ 7.6 CGPA | 📍 Hyderabad, Telangana</p>
+  </div>
+
+  <div id="experience" class="section">
+    <div class="category-label">Featured Experience</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-image">
+          <img src="https://www.cloud4c.com/themes/custom/cloud4c/images/revamp/svg/cloud4c-blue-logo.svg">
+        </div>
+        <div class="card-content">
+          <div class="price">SAP Fiori Developer</div>
+          <p><strong>Company:</strong> Ctrls Cloud4C</p>
+          <p><strong>Duration:</strong> Jul 2023 - Present</p>
+          <p><strong>Key Responsibilities:</strong></p>
+          <ul>
+            <li>Developed and customized SAP Fiori and SAP UI5 applications.</li>
+            <li>Collaborated with cross-functional teams for end-to-end implementation.</li>
+            <li>Designed responsive SAP UI5 applications using MVC architecture, XML views, and JavaScript controllers.</li>
+            <li>Integrated Fiori and UI5 apps with SAP S/4HANA systems.</li>
+            <li>Implemented OData services for backend integration.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image">
+          <img src="http://www.johanbrown.com/images/logo.png">
+        </div>
+        <div class="card-content">
+          <div class="price">JavaScript Developer</div>
+          <p><strong>Company:</strong> Johan Brown Publishing Pvt Ltd</p>
+          <p><strong>Duration:</strong> May 2023 - Jul 2023</p>
+          <p><strong>Key Responsibilities:</strong></p>
+          <ul>
+            <li>Contributed to developing SMART eBooks with interactive features.</li>
+            <li>Utilized AnKi for flashcard creation and Calibre for eBook management.</li>
+            <li>Transformed static eBooks into dynamic SMART eBooks using jQuery.</li>
+            <li>Refactored legacy JavaScript codebase into modular components.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image">
+          <img src="https://media.licdn.com/dms/image/v2/C560BAQF3H-o_kgtM7g/company-logo_200_200/company-logo_200_200/0/1630672249915?e=1743638400&v=beta&t=Lw-1ia7bgH5alBOHTtL5WwVzX89HCZZ6Hx9DAylmGXI">
+        </div>
+        <div class="card-content">
+          <div class="price">Cyber Security Intern</div>
+          <p><strong>Company:</strong> Supraja Technologies</p>
+          <p><strong>Duration:</strong> Aug 2022 - Oct 2022</p>
+          <p><strong>Key Responsibilities:</strong></p>
+          <ul>
+            <li>Worked with tools like Burp Suite, Wireshark, and Metasploit.</li>
+            <li>Gained experience in network security and penetration testing.</li>
+            <li>Supported investigations into potential policy violations or data breaches.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="education" class="section">
+    <div class="category-label">Education</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-image">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQEYBL0SN8AV_A/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1690865437280?e=2147483647&v=beta&t=slH2PX3GDhbk96hKs5x8I3sIYQ4mpLmLsJdcv-ZP8ec">
+        </div>
+        <div class="card-content">
+          <div class="price">B.Sc Computer Science</div>
+          <p>Geethanjali college of engineering and technology</p>
+          <p>2020 - 2024</p>
+          <p>CGPA: 7.6</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="projects" class="section">
+    <div class="category-label">Projects</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-image">E-Health Records</div>
+        <div class="card-content">
+          <div class="price">Blockchain Project</div>
+          <p><strong>Technologies:</strong> Ganache, Metamask, JavaScript, Solidity</p>
+          <p><strong>Details:</strong></p>
+          <ul>
+            <li>Implemented secure health record sharing using blockchain technology.</li>
+            <li>Developed smart contracts for secure data management.</li>
+            <li>Implemented real-time chat between doctor and patient.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image">Web App for Thin Clients</div>
+        <div class="card-content">
+          <div class="price">Node.js Application</div>
+          <p><strong>Technologies:</strong> Node.js, Express.js, Bootstrap, MySQL</p>
+          <p><strong>Details:</strong></p>
+          <ul>
+            <li>Developed a radiation monitoring system for NFC.</li>
+            <li>Automated data storage previously managed in Excel.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-image">FlutterFlow App</div>
+        <div class="card-content">
+          <div class="price">College Application</div>
+          <p><strong>Technologies:</strong> Python, Discord Webhook</p>
+          <p><strong>Details:</strong></p>
+          <ul>
+            <li>Developed a keylogger to store keystrokes and send them to Discord.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="skills" class="section">
+    <div class="category-label">Technical Skills</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-content">
+          <div class="price">Programming Languages</div>
+          <p>Java, JavaScript, C, Python, SQL, HTML, CSS</p>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-content">
+          <div class="price">Technologies</div>
+          <p>Git, jQuery, Node.js, MySQL, UI5</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contact" class="section">
+    <div class="category-label">Contact Information</div>
+    <div class="grid-container">
+      <div class="card">
+        <div class="card-content">
+          <div class="price">Get in Touch</div>
+          <p>📧 rounithdharavath@gmail.com</p>
+          <p>🔗 github.com/rounith</p>
+          <p>📍 Hyderabad, Telangana</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
